@@ -12,25 +12,16 @@ const notModifiers = {
   'returns': 1
 }
 
-/** Returns true if the given ast statement is a function. */
-function isFunction(statement) {
-  return statement.type === 'FunctionDeclaration'
-}
-
-/** Returns true if the given ast statement is an expression. */
-function isExpression(statement) {
-  return statement.type === 'ExpressionStatement'
-}
+// checks ast statement types
+const isFunction = statement => statement.type === 'FunctionDeclaration'
+const isExpression = statement => statement.type === 'ExpressionStatement'
+const isContractOrLibrary = statement => statement.type === 'ContractStatement' || statement.type === 'LibraryStatement'
 
 /** Gets the index of the line of the given index. */
-function getLineIndex(src, index) {
-  return src.lastIndexOf('\n', index)
-}
+const getLineIndex = (src, index) => src.lastIndexOf('\n', index)
 
 /** Gets the index of the line of the given index. */
-function getLineNumber(src, index) {
-  return src.slice(0, index).split('\n').length
-}
+const getLineNumber = (src, index) => src.slice(0, index).split('\n').length
 
 function injectDebugLines(src, options = {}) {
 
@@ -38,7 +29,7 @@ function injectDebugLines(src, options = {}) {
   const ast = SolidityParser.parse(src)
 
   // // get contract name
-  const contract = ast.body.find(statement => statement.type === 'ContractStatement')
+  const contract = ast.body.find(isContractOrLibrary)
 
   // get all expressions in all functions
   const expressions = contract.body ? contract.body

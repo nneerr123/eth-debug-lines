@@ -43,6 +43,27 @@ describe('eth-debug-lines', () => {
     generateInterface(src).should.equal(expectedOutput)
   })
 
+  it('should work on libraries', () => {
+    const src = `library MyContract {
+  function foo() {
+    uint a;
+    uint b;
+    uint c;
+  }
+}
+`
+    const expectedOutput = `library MyContract {
+  event DebugLine(uint line); function foo() {
+    DebugLine(3); uint a;
+    DebugLine(4); uint b;
+    DebugLine(5); uint c;
+  }
+}
+`
+    generateInterface(src).should.equal(expectedOutput)
+  })
+
+
   it('should read files from stdin', () => {
     const src = `contract MyContract {
   function foo() {
