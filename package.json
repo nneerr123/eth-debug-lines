@@ -1,0 +1,38 @@
+{
+  "name": "eth-debug-lines",
+  "version": "0.0.0",
+  "description": "Injects Solidity source code with DebugLine events to allow per-line error reporting.",
+  "license": "ISC",
+  "repository": "https://github.com/raineorshine/eth-debug-lines",
+  "author": {
+    "name": "Raine Revere",
+    "email": "raineorshine@gmail.com",
+    "url": "https://github.com/raineorshine"
+  },
+  "bin": {
+    "eth-debug-lines": "bin.js"
+  },
+  "engines": {
+    "node": ">=0.12.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "ethereum",
+    "solidity",
+    "contract",
+    "interface"
+  ],
+  "devDependencies": {
+    "chai": "*",
+    "chai-as-promised": "^6.0.0",
+    "mocha": "*",
+    "spawn-please": "^0.2.0"
+  },
+  "dependencies": {
+    "get-stdin-promise": "^0.1.1",
+    "solidity-parser": "git://github.com/raineorshine/solidity-parser.git#326da052567245c9d9a0ba941bd9923aa89cda84",
+    "yargs": "^6.4.0"
+  }
+}
