@@ -51,18 +51,18 @@ function injectDebugLines(src, options = {}) {
     : []
 
   // generate source for the DebugLine event
-  const eventSource = '\n\n  // INJECTED\n  event DebugLine(uint line);\n';
-  const contractBodyStart = getLineIndex(src, contract.body[0].start)
+  const eventSource = 'event DebugLine(uint line); ';
+  const contractBodyStart = contract.body[0].start
   const srcWithEvent = src.slice(0, contractBodyStart) + eventSource + src.slice(contractBodyStart)
 
   const newSource = expressions.reduce((accum, exp) => {
 
-    const lineIndex = getLineIndex(accum.src, exp.start + accum.offset)
     const lineNumber = getLineNumber(src, exp.start)
-    const insertion = `\nDebugLine(${lineNumber});`
+    const insertion = `DebugLine(${lineNumber}); `
+    const insertionIndex = exp.start + accum.offset
 
     return {
-      src: accum.src.slice(0, lineIndex) + insertion + accum.src.slice(lineIndex),
+      src: accum.src.slice(0, insertionIndex) + insertion + accum.src.slice(insertionIndex),
       offset: accum.offset + insertion.length
     }
   }, { src: srcWithEvent, offset: eventSource.length })

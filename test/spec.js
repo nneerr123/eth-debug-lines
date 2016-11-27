@@ -19,20 +19,27 @@ describe('eth-debug-lines', () => {
 }
 `
     const expectedOutput = `contract MyContract {
-
-  // INJECTED
-  event DebugLine(uint line);
-
-  function foo() {
-DebugLine(3);
-    uint a;
-DebugLine(4);
-    uint b;
-DebugLine(5);
-    uint c;
+  event DebugLine(uint line); function foo() {
+    DebugLine(3); uint a;
+    DebugLine(4); uint b;
+    DebugLine(5); uint c;
   }
 }
 `
+    generateInterface(src).should.equal(expectedOutput)
+  })
+
+  it('should inject DebugLine events into source with no newlines', () => {
+    const src = `contract MyContract {
+  function foo() { uint a; uint b;
+    uint c;
+  }
+}`
+    const expectedOutput = `contract MyContract {
+  event DebugLine(uint line); function foo() { DebugLine(2); uint a; DebugLine(2); uint b;
+    DebugLine(3); uint c;
+  }
+}`
     generateInterface(src).should.equal(expectedOutput)
   })
 
@@ -45,17 +52,10 @@ DebugLine(5);
   }
 }`
     const expectedOutput = `contract MyContract {
-
-  // INJECTED
-  event DebugLine(uint line);
-
-  function foo() {
-DebugLine(3);
-    uint a;
-DebugLine(4);
-    uint b;
-DebugLine(5);
-    uint c;
+  event DebugLine(uint line); function foo() {
+    DebugLine(3); uint a;
+    DebugLine(4); uint b;
+    DebugLine(5); uint c;
   }
 }
 `
