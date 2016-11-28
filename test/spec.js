@@ -29,6 +29,26 @@ describe('eth-debug-lines', () => {
     generateInterface(src).should.equal(expectedOutput)
   })
 
+  it('should inject a DebugLine log before throw statements', () => {
+    const src = `contract MyContract {
+  function foo() {
+    uint a;
+    throw;
+    uint b;
+  }
+}
+`
+    const expectedOutput = `contract MyContract {
+  event DebugLine(uint line); function foo() {
+    DebugLine(3); uint a;
+    DebugLine(4); throw;
+    DebugLine(5); uint b;
+  }
+}
+`
+    generateInterface(src).should.equal(expectedOutput)
+  })
+
   it('should inject DebugLine events into source with no newlines', () => {
     const src = `contract MyContract {
   function foo() { uint a; uint b;
