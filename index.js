@@ -2,16 +2,6 @@ const SolidityParser = require('solidity-parser')
 const path = require('path')
 const fs = require('fs')
 
-// since the parser currently parser modifiers into the same heap as constant, public, private, etc, we need to whitelist these
-const notModifiers = {
-  'constant': 1,
-  'payable': 1,
-  'public': 1,
-  'private': 1,   // redundant: private functions get filtered out before modifiers are filtered
-  'internal': 1,  // redundant: internal functions get filtered out before modifiers are filtered
-  'returns': 1
-}
-
 // checks ast statement types
 const isFunction = statement => statement.type === 'FunctionDeclaration'
 const isExpression = statement => statement.type === 'ExpressionStatement' || statement.type === 'ThrowStatement'
