@@ -1,6 +1,6 @@
 {
   "name": "eth-debug-lines",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Injects Solidity source code with DebugLine events to allow per-line error reporting.",
   "license": "ISC",
   "repository": "https://github.com/raineorshine/eth-debug-lines",
